@@ -22,7 +22,10 @@ front page with five panels.
 
 ## How it runs
 
-`main.py` (Python 3.13, standard library only) verifies the shipped
-`entry.png` — PNG signature plus a recorded SHA-256 — and writes it
-unchanged to `/output/entry.png`. No network, no randomness: every run
-delivers the same bytes. The image is 1024 × 1024 and 705,323 bytes.
+The program at the repository root is `main.py` (Python 3.13, standard
+library only), the compressed form of the readable source `deliver.py`
+kept beside it. It verifies the shipped `entry.png` — PNG signature
+plus a recorded SHA-256 — writes it unchanged to `/output/entry.png`,
+then reads the delivered file back and checks it again. No network, no
+randomness: every run delivers the same bytes. The image is
+1024 × 1024 and 705,323 bytes.

