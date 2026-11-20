@@ -36,7 +36,13 @@ def main() -> int:
     os.makedirs(TARGET_DIR, exist_ok=True)
     with open(TARGET, "wb") as handle:
         handle.write(payload)
-    print(f"wrote {TARGET} ({len(payload)} bytes)")
+    # Read the delivered file back and check it landed intact; a short
+    # or corrupted write must fail loudly instead of shipping quietly.
+    with open(TARGET, "rb") as handle:
+        delivered = handle.read()
+    if hashlib.sha256(delivered).hexdigest() != EXPECTED_SHA256:
+        raise SystemExit("delivered file failed its post-write check")
+    print(f"wrote {TARGET} ({len(delivered)} bytes, verified)")
     return 0
 
 
